@@ -12,3 +12,9 @@ DECLARE_CLASS_CODEGEN(Nya, ModifiersMenu, UnityEngine::MonoBehaviour,
     DECLARE_INSTANCE_FIELD(UnityEngine::UI::Button*, nyaButton);
     DECLARE_INSTANCE_METHOD(void, DidActivate, bool firstactivation);
 )
+
+    DECLARE_CLASS_CODEGEN(Nya, SettingsMenu, UnityEngine::MonoBehaviour,
+    DECLARE_INSTANCE_FIELD(HMUI::ImageView*, NYA);
+    DECLARE_INSTANCE_FIELD(UnityEngine::UI::Button*, nyaButton);
+    DECLARE_INSTANCE_METHOD(void, DidActivate, bool firstactivation);
+)
