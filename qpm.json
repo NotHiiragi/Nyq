@@ -2,12 +2,12 @@
 	"sharedDir": "shared",
 	"dependenciesDir": "extern",
 	"info": {
-		"name": "Nyq",
-		"id": "Nyq",
+		"name": "Nya",
+		"id": "Nya",
 		"version": "0.1.0",
 		"url": null,
 		"additionalData": {
-			"overrideSoName": "libNyq.so"
+			"overrideSoName": "libNya.so"
 		}
 	},
 	"dependencies": [
