@@ -1,5 +1,5 @@
 #define RAPIDJSON_HAS_STDSTRING 1
-#include "ModifiersMenu.hpp"
+#include "NyqMenu.hpp"
 #include "WebUtils.hpp"
 #include "beatsaber-hook/shared/utils/typedefs.h"
 #include "UnityEngine/Resources.hpp"
@@ -11,10 +11,10 @@
 
 using namespace UnityEngine;
 
-DEFINE_TYPE(Nya, ModifiersMenu);
+DEFINE_TYPE(Nya, NyqMenu);
 
 
-void Nya::ModifiersMenu::DidActivate(bool firstActivation)
+void Nya::NyqMenu::DidActivate(bool firstActivation)
 {
     if(firstActivation)
     {
