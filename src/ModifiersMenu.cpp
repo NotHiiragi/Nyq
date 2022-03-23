@@ -1,6 +1,7 @@
 #define RAPIDJSON_HAS_STDSTRING 1
 #include "ModifiersMenu.hpp"
 #include "WebUtils.hpp"
+#include "ModConfig.hpp"
 #include "beatsaber-hook/shared/utils/typedefs.h"
 #include "UnityEngine/Resources.hpp"
 #include "UnityEngine/UI/LayoutElement.hpp"
@@ -12,6 +13,7 @@
 using namespace UnityEngine;
 
 DEFINE_TYPE(Nya, ModifiersMenu);
+DEFINE_TYPE(Nya, SettingsMenu);
 
 
 void Nya::ModifiersMenu::DidActivate(bool firstActivation)
@@ -69,7 +71,7 @@ void Nya::ModifiersMenu::DidActivate(bool firstActivation)
                                         });
                                         getLogger().debug("Les go! x2");
                                         //delete arr;
-
+                                        
                                 }
                             });
                             break;
@@ -78,11 +80,56 @@ void Nya::ModifiersMenu::DidActivate(bool firstActivation)
             });
 
             UnityEngine::UI::Button* settingsButton = QuestUI::BeatSaberUI::CreateUIButton(horz->get_transform(), to_utf16("Settings"), "PracticeButton",
-            [this]() {
-
+            [this]() { 
+                
+                void Nya::SettingsMenu::DidActivate(bool firstActivation)
+                {
+                    if(firstActivation)
+                    {
+                        UnityEngine::GameObject* container = BeatSaberUI::CreateScrollableSettingsContainer(self->get_transform());
+                                BeatSaberUI::CreateToggle(container->get_transform(), "Only NSFW?", getModConfig().NSFW.GetValue(),
+                                    [](bool value) { 
+                                    getModConfig().NSFW.SetValue(value);
+                                });
+                    }
+                }
             });
     }
-    WebUtils::GetAsync("https://api.waifu.pics/sfw/neko", 10.0, [&](long code, std::string result){
+    if(getModConfig().NSFW.GetValue()){
+        WebUtils::GetAsync("https://api.waifu.pics/nsfw/neko", 10.0, [&](long code, std::string result){
+        switch (code)
+        {
+            case 200:
+                rapidjson::Document document;
+                document.Parse(result);
+                if(document.HasParseError() || !document.IsObject())
+                    return;
+                std::string url = "";
+                if(document.HasMember("url"))
+                {
+                    url = document.FindMember("url")->value.GetString();
+                }
+                getLogger().debug("%s", url.c_str());
+                WebUtils::GetAsyncBytes(url, 10.0, [this](long code, std::shared_ptr<std::vector<uint8_t>> result){
+                    getLogger().debug("Downloaded Image!");
+                    getLogger().debug("%lu", result.get()->size());
+                    switch (code)
+                    {
+                        case 200:
+                            getLogger().debug("Les go!");
+                            auto arr = il2cpp_utils::vectorToArray(*result.get());
+                            QuestUI::MainThreadScheduler::Schedule([this, arr]
+                            {
+                                this->NYA->set_sprite(QuestUI::BeatSaberUI::ArrayToSprite(arr));
+                                this->nyaButton->set_interactable(true);
+                            });
+                            getLogger().debug("Les go! x2");
+                    }
+                });
+                break;
+        } 
+    }else{
+        WebUtils::GetAsync("https://api.waifu.pics/sfw/neko", 10.0, [&](long code, std::string result){
         switch (code)
         {
             case 200:
@@ -114,5 +161,7 @@ void Nya::ModifiersMenu::DidActivate(bool firstActivation)
                 });
                 break;
         }
+      }
+
     });
 }
