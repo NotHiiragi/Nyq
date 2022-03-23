@@ -1,6 +1,6 @@
 #include "main.hpp"
-
-static ModInfo modInfo; // Stores the ID and version of our mod, and is sent to the modloader upon startup
+#include "NyqMenu.hpp"
+#include "questui/shared/QuestUI.hpp"
 
 // Loads the config from disk using our modInfo, then returns it for use
 Configuration& getConfig() {
@@ -29,7 +29,8 @@ extern "C" void setup(ModInfo& info) {
 extern "C" void load() {
     il2cpp_functions::Init();
 
-    getLogger().info("Installing hooks...");
-    // Install our hooks (none defined yet)
-    getLogger().info("Installed all hooks!");
+    QuestUI::Init();
+
+    QuestUI::Register::RegisterGameplaySetupMenu<Nya::NyqMenu*>(modInfo, "Nya");
+
 }
