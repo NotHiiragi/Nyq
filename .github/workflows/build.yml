@@ -1,9 +1,9 @@
 name: NDK build
 
 env:
-  module_id: Nyq
-  qmodName: Nyq
-  cache-name: Nyq_cache
+  module_id: Nya
+  qmodName: Nya
+  cache-name: Nya_cache
 
 on:
   push:
