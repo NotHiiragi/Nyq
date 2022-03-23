@@ -128,7 +128,7 @@ void Nya::ModifiersMenu::DidActivate(bool firstActivation)
                 });
                 break;
         } 
-    }
+    }else{
         WebUtils::GetAsync("https://api.waifu.pics/sfw/neko", 10.0, [&](long code, std::string result){
         switch (code)
         {
@@ -161,6 +161,7 @@ void Nya::ModifiersMenu::DidActivate(bool firstActivation)
                 });
                 break;
         }
+      }
 
     });
 }
