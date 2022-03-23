@@ -7,7 +7,7 @@
 #include "UnityEngine/UI/Button.hpp"
 
 
-DECLARE_CLASS_CODEGEN(Nya, NyqMenu, UnityEngine::MonoBehaviour,
+DECLARE_CLASS_CODEGEN(Nya, ModifiersMenu, UnityEngine::MonoBehaviour,
     DECLARE_INSTANCE_FIELD(HMUI::ImageView*, NYA);
     DECLARE_INSTANCE_FIELD(UnityEngine::UI::Button*, nyaButton);
     DECLARE_INSTANCE_METHOD(void, DidActivate, bool firstactivation);
