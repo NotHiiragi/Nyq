@@ -1,5 +1,5 @@
 #include "main.hpp"
-#include "NyqMenu.hpp"
+#include "ModifiersMenu.hpp"
 #include "questui/shared/QuestUI.hpp"
 
 // Loads the config from disk using our modInfo, then returns it for use
